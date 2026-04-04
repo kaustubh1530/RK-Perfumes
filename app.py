@@ -135,6 +135,34 @@ def seed_data():
 # ── Create app instance (needed by Flask's dev server) ────────
 app = create_app()
 
+# ── Auto-create database tables on startup (needed for Railway) ─
+with app.app_context():
+    from extensions import db
+    from models import Admin, Perfume
+    db.create_all()
+    # Seed data if empty
+    from werkzeug.security import generate_password_hash
+    if not Admin.query.first():
+        admin = Admin(
+            email="admin@rkperfume.com",
+            password_hash=generate_password_hash("Admin@1234")
+        )
+        db.session.add(admin)
+        db.session.commit()
+        print("Admin created")
+    if not Perfume.query.first():
+        samples = [
+            Perfume(name="RK Cactus Garden", inspired_by="Louis Vuitton - Cactus Garden", description="A bold woody aromatic inspired by Louis Vuitton Cactus Garden. Opens with crisp cactus and green fig.", price=35.00, quantity=20, category="Woody", image_filename="placeholder.png", is_featured=True),
+            Perfume(name="RK Aventus", inspired_by="Creed - Aventus", description="Our tribute to the legendary Creed Aventus. Bright pineapple and blackcurrant open to a smoky birch heart.", price=45.00, quantity=15, category="Chypre", image_filename="placeholder.png", is_featured=True),
+            Perfume(name="RK Aventus Cologne", inspired_by="Creed - Aventus Cologne", description="Inspired by Creed Aventus Cologne. Icy mint and pink pepper burst over a clean woody base.", price=40.00, quantity=18, category="Fresh", image_filename="placeholder.png", is_featured=True),
+            Perfume(name="RK Black Phantom", inspired_by="Kilian - Black Phantom", description="Inspired by Kilian Black Phantom. Dark rum and black sugar envelop a smoky coffee heart.", price=42.00, quantity=10, category="Oriental", image_filename="placeholder.png"),
+            Perfume(name="RK Baccarat Rouge", inspired_by="Maison Francis Kurkdjian - Baccarat Rouge 540", description="Our homage to Baccarat Rouge 540. Jasmine and saffron shimmer above a luminous ambergris base.", price=48.00, quantity=12, category="Floral", image_filename="placeholder.png"),
+            Perfume(name="RK Oud Wood", inspired_by="Tom Ford - Oud Wood", description="Inspired by Tom Ford Oud Wood. Rare oud wood softened by rosewood and cardamom.", price=38.00, quantity=25, category="Woody", image_filename="placeholder.png"),
+        ]
+        db.session.bulk_save_objects(samples)
+        db.session.commit()
+        print("Sample perfumes added")
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
