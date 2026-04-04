@@ -1,0 +1,191 @@
+/* ============================================================
+   RK Perfume – Admin Panel Stylesheet
+   ============================================================ */
+
+/* ── Layout ───────────────────────────────────────────────── */
+.admin-body {
+  background: #F4F1EC;
+  font-family: var(--ff-body);
+  color: #1A1614;
+}
+
+.admin-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────── */
+.admin-sidebar {
+  width: 230px;
+  min-height: 100vh;
+  background: #1A1614;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  transition: transform 0.25s ease;
+  z-index: 200;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1.25rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1.25rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.9);
+  border-left-color: #B8976C;
+}
+.sidebar-link.active {
+  background: rgba(184,151,108,0.15);
+  color: #D4B896;
+  border-left-color: #B8976C;
+}
+.sidebar-link.text-danger-soft {
+  color: rgba(226,75,74,0.7);
+}
+.sidebar-link.text-danger-soft:hover {
+  color: #E24B4A;
+}
+.sidebar-divider {
+  border-color: rgba(255,255,255,0.08);
+  margin: 0.5rem 0;
+}
+
+/* Mobile sidebar */
+@media (max-width: 991px) {
+  .admin-sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    transform: translateX(-100%);
+  }
+  .admin-sidebar.open { transform: translateX(0); }
+}
+
+/* ── Main area ────────────────────────────────────────────── */
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  background: #fff;
+  border-bottom: 1px solid #E8DDD3;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ── Admin cards ──────────────────────────────────────────── */
+.admin-card {
+  background: #fff;
+  border: 1px solid #E8DDD3;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.admin-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #E8DDD3;
+  background: #FDFBF8;
+}
+
+/* ── Stat cards ───────────────────────────────────────────── */
+.admin-stat-card {
+  background: #fff;
+  border: 1px solid #E8DDD3;
+  border-radius: 4px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.stat-icon.bg-gold    { background: rgba(184,151,108,0.15); color: #B8976C; }
+.stat-icon.bg-warning { background: rgba(239,159,39,0.15);  color: #EF9F27; }
+.stat-icon.bg-danger  { background: rgba(226,75,74,0.15);   color: #E24B4A; }
+.stat-icon.bg-success { background: rgba(99,153,34,0.15);   color: #639922; }
+
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #1A1614;
+}
+.stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6B5E54;
+  margin-top: 2px;
+}
+
+/* ── Table ────────────────────────────────────────────────── */
+.admin-table th {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6B5E54;
+  font-weight: 500;
+  padding: 0.7rem 0.85rem;
+  background: #FDFBF8;
+  border-bottom: 1px solid #E8DDD3;
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 0.75rem 0.85rem;
+  vertical-align: middle;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #F4F1EC;
+}
+.admin-table tbody tr:hover { background: #FDFBF8; }
+.admin-table tbody tr:last-child td { border-bottom: none; }
+
+/* ── Admin thumbnail ──────────────────────────────────────── */
+.admin-thumb {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 3px;
+  border: 1px solid #E8DDD3;
+  background: #F4F1EC;
+}
+.admin-thumb-lg {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #E8DDD3;
+}

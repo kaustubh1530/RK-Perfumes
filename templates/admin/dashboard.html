@@ -1,0 +1,197 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard – RK Perfume Admin{% endblock %}
+{% block page_title %}Product Dashboard{% endblock %}
+
+{% block admin_content %}
+
+<!-- ═══ STAT CARDS ═════════════════════════════════════════════════════════ -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="admin-stat-card">
+      <div class="stat-icon bg-gold"><i class="bi bi-grid"></i></div>
+      <div>
+        <div class="stat-number">{{ total }}</div>
+        <div class="stat-label">Total Products</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="admin-stat-card">
+      <div class="stat-icon bg-warning"><i class="bi bi-exclamation-triangle"></i></div>
+      <div>
+        <div class="stat-number">{{ low_stock }}</div>
+        <div class="stat-label">Low Stock</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="admin-stat-card">
+      <div class="stat-icon bg-danger"><i class="bi bi-x-circle"></i></div>
+      <div>
+        <div class="stat-number">{{ out_of_stock }}</div>
+        <div class="stat-label">Out of Stock</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="admin-stat-card">
+      <div class="stat-icon bg-success"><i class="bi bi-check-circle"></i></div>
+      <div>
+        <div class="stat-number">{{ total - out_of_stock }}</div>
+        <div class="stat-label">Available</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRODUCT TABLE ══════════════════════════════════════════════════════ -->
+<div class="admin-card">
+  <div class="admin-card-header">
+    <h6 class="mb-0"><i class="bi bi-table me-2"></i>All Perfumes</h6>
+    <a href="{{ url_for('admin.add_perfume') }}" class="btn rk-btn-primary btn-sm">
+      <i class="bi bi-plus-lg me-1"></i>Add New
+    </a>
+  </div>
+
+  <!-- Mobile search -->
+  <div class="p-3 border-bottom">
+    <input type="text" id="tableSearch" class="form-control rk-input form-control-sm"
+           placeholder="Search products…">
+  </div>
+
+  <div class="table-responsive">
+    <table class="table admin-table mb-0" id="productTable">
+      <thead>
+        <tr>
+          <th style="width:60px">Image</th>
+          <th>Name</th>
+          <th>Inspired By</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Featured</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in perfumes %}
+        <tr>
+          <!-- Thumbnail -->
+          <td>
+            <img
+              src="{{ url_for('static', filename='images/' + p.image_filename) }}"
+              alt="{{ p.name }}"
+              class="admin-thumb"
+              onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
+            />
+          </td>
+
+          <td class="fw-500">{{ p.name }}</td>
+
+          <td class="text-muted small">{{ p.inspired_by }}</td>
+
+          <td><span class="category-tag">{{ p.category }}</span></td>
+
+          <td class="fw-500">${{ "%.2f"|format(p.price) }}</td>
+
+          <!-- Stock with colour -->
+          <td>
+            {% if p.quantity == 0 %}
+              <span class="badge bg-danger">0 – Out</span>
+            {% elif p.quantity <= 5 %}
+              <span class="badge bg-warning text-dark">{{ p.quantity }} – Low</span>
+            {% else %}
+              <span class="badge bg-success">{{ p.quantity }}</span>
+            {% endif %}
+          </td>
+
+          <!-- Featured toggle -->
+          <td class="text-center">
+            <form method="POST"
+                  action="{{ url_for('admin.toggle_featured', product_id=p.id) }}"
+                  style="display:inline">
+              <button type="submit"
+                      class="btn btn-sm {{ 'btn-warning' if p.is_featured else 'btn-outline-secondary' }}"
+                      title="{{ 'Unfeature' if p.is_featured else 'Feature on home page' }}">
+                <i class="bi bi-star{{ '-fill' if p.is_featured else '' }}"></i>
+              </button>
+            </form>
+          </td>
+
+          <!-- Edit / Delete -->
+          <td class="text-end">
+            <a href="{{ url_for('admin.edit_perfume', product_id=p.id) }}"
+               class="btn btn-sm btn-outline-primary me-1" title="Edit">
+              <i class="bi bi-pencil"></i>
+            </a>
+
+            <!-- Delete with confirmation modal trigger -->
+            <button type="button" class="btn btn-sm btn-outline-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    data-id="{{ p.id }}"
+                    data-name="{{ p.name }}"
+                    title="Delete">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="8" class="text-center text-muted py-4">
+            No products yet. <a href="{{ url_for('admin.add_perfume') }}">Add your first perfume</a>.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ DELETE CONFIRMATION MODAL ═════════════════════════════════════════ -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title text-danger">
+          <i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete
+        </h6>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete <strong id="deleteName"></strong>?
+        This action cannot be undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form id="deleteForm" method="POST">
+          <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash me-1"></i>Delete
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Populate delete modal with the right product
+  document.getElementById('deleteModal').addEventListener('show.bs.modal', function(e) {
+    const btn = e.relatedTarget;
+    document.getElementById('deleteName').textContent = btn.dataset.name;
+    document.getElementById('deleteForm').action =
+      '/admin/delete/' + btn.dataset.id;
+  });
+
+  // Live table search
+  document.getElementById('tableSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#productTable tbody tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+{% endblock %}

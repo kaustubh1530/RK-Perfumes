@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block title %}RK Perfume – Inspired-By Fragrances{% endblock %}
+
+{% block content %}
+
+<!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+<section class="rk-hero d-flex align-items-center">
+  <div class="container text-center">
+    <p class="hero-label">Premium Inspired-By Fragrances</p>
+    <h1 class="hero-title">
+      Wear the World's<br>
+      <em>Greatest Scents</em>
+    </h1>
+    <p class="hero-sub">
+      Experience luxury fragrances crafted to mirror the world's most iconic perfumes —
+      at a price that makes sense.
+    </p>
+    <a href="{{ url_for('products.shop') }}" class="btn rk-btn-primary me-2">
+      Shop Now <i class="bi bi-arrow-right ms-1"></i>
+    </a>
+    <a href="{{ url_for('products.contact') }}" class="btn rk-btn-outline">
+      Contact Us
+    </a>
+  </div>
+</section>
+
+<!-- ═══ TRUST BADGES ════════════════════════════════════════════════════════ -->
+<section class="py-4 border-bottom">
+  <div class="container">
+    <div class="row text-center gy-3">
+      <div class="col-6 col-md-3">
+        <div class="trust-badge">
+          <i class="bi bi-award"></i>
+          <span>Premium Quality</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="trust-badge">
+          <i class="bi bi-patch-check"></i>
+          <span>Long Lasting</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="trust-badge">
+          <i class="bi bi-tag"></i>
+          <span>Affordable Price</span>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="trust-badge">
+          <i class="bi bi-heart"></i>
+          <span>Inspired by Luxury</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURED PERFUMES ══════════════════════════════════════════════════ -->
+<section class="py-5">
+  <div class="container">
+
+    <div class="section-header text-center mb-5">
+      <p class="section-label">Hand-Picked</p>
+      <h2 class="section-title">Featured Fragrances</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      {% for perfume in featured %}
+      <div class="col-sm-6 col-lg-4">
+        <div class="rk-card h-100">
+
+          <!-- Product Image -->
+          <div class="rk-card-img-wrap">
+            <img
+              src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+              alt="{{ perfume.name }}"
+              class="rk-card-img"
+              onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
+            />
+            <!-- Stock badge -->
+            {% if perfume.stock_status == 'out' %}
+              <span class="stock-badge out">Out of Stock</span>
+            {% elif perfume.stock_status == 'low' %}
+              <span class="stock-badge low">Low Stock</span>
+            {% endif %}
+          </div>
+
+          <div class="rk-card-body">
+            <p class="inspired-tag"><i class="bi bi-stars me-1"></i>Inspired by {{ perfume.inspired_by }}</p>
+            <h5 class="rk-card-title">{{ perfume.name }}</h5>
+            <p class="rk-card-text">{{ perfume.description | truncate(90) }}</p>
+            <div class="d-flex align-items-center justify-content-between mt-auto pt-3">
+              <span class="rk-price">${{ "%.2f"|format(perfume.price) }}</span>
+              <a href="{{ url_for('products.product_detail', product_id=perfume.id) }}"
+                 class="btn rk-btn-primary btn-sm">
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('products.shop') }}" class="btn rk-btn-outline">
+        View All Perfumes <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ ABOUT BANNER ════════════════════════════════════════════════════════ -->
+<section class="rk-about-banner py-5">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-6">
+        <p class="section-label">Our Promise</p>
+        <h2 class="section-title">Luxury Inspired.<br>Honestly Priced.</h2>
+        <div class="section-divider"></div>
+        <p class="text-muted mt-3">
+          At RK Perfume we believe everyone deserves to smell extraordinary.
+          Every fragrance in our collection is a carefully crafted homage to the world's
+          finest perfumes — made with quality ingredients and sold transparently as
+          inspired-by recreations.
+        </p>
+        <a href="{{ url_for('products.shop') }}" class="btn rk-btn-primary mt-3">
+          Explore the Collection
+        </a>
+      </div>
+      <div class="col-lg-5 offset-lg-1 text-center">
+        <div class="about-icon-grid">
+          <div class="about-icon-card">
+            <i class="bi bi-droplet-half"></i>
+            <p>High-Quality<br>Ingredients</p>
+          </div>
+          <div class="about-icon-card">
+            <i class="bi bi-recycle"></i>
+            <p>Responsibly<br>Sourced</p>
+          </div>
+          <div class="about-icon-card">
+            <i class="bi bi-gem"></i>
+            <p>Luxury-Inspired<br>Blends</p>
+          </div>
+          <div class="about-icon-card">
+            <i class="bi bi-star"></i>
+            <p>Customer<br>Favourites</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CATEGORIES ════════════════════════════════════════════════════════ -->
+<section class="py-5">
+  <div class="container">
+    <div class="section-header text-center mb-4">
+      <p class="section-label">Browse by Mood</p>
+      <h2 class="section-title">Shop by Category</h2>
+      <div class="section-divider mx-auto"></div>
+    </div>
+    <div class="row g-3 text-center">
+      {% for cat, icon in [('Floral','🌸'),('Woody','🌿'),('Oriental','✨'),('Fresh','💧'),('Chypre','🍂')] %}
+      <div class="col-6 col-md-4 col-lg-2-4">
+        <a href="{{ url_for('products.shop') }}?category={{ cat }}" class="cat-pill">
+          <span class="cat-icon">{{ icon }}</span>
+          <span>{{ cat }}</span>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

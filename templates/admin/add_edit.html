@@ -1,0 +1,172 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ action }} Perfume – RK Perfume Admin{% endblock %}
+{% block page_title %}{{ action }} Perfume{% endblock %}
+
+{% block admin_content %}
+
+<div class="row justify-content-center">
+<div class="col-lg-8">
+
+  <div class="admin-card">
+    <div class="admin-card-header">
+      <h6 class="mb-0">
+        <i class="bi bi-{{ 'plus-circle' if action == 'Add' else 'pencil-square' }} me-2"></i>
+        {{ action }} Perfume
+      </h6>
+      <a href="{{ url_for('admin.dashboard') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left me-1"></i>Back
+      </a>
+    </div>
+
+    <div class="p-4">
+      <form method="POST"
+            action="{{ url_for('admin.add_perfume') if action == 'Add' else url_for('admin.edit_perfume', product_id=perfume.id) }}"
+            enctype="multipart/form-data"
+            novalidate>
+
+        <!-- Name -->
+        <div class="mb-3">
+          <label class="form-label rk-label" for="name">
+            Product Name <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="name" name="name" class="form-control rk-input"
+                 placeholder="e.g. RK Aventus"
+                 value="{{ perfume.name if perfume else '' }}" required>
+        </div>
+
+        <!-- Inspired By -->
+        <div class="mb-3">
+          <label class="form-label rk-label" for="inspired_by">
+            Inspired By <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="inspired_by" name="inspired_by" class="form-control rk-input"
+                 placeholder="e.g. Creed – Aventus"
+                 value="{{ perfume.inspired_by if perfume else '' }}" required>
+          <div class="form-text">
+            Include brand name, e.g. "Creed – Aventus" or "Louis Vuitton – Cactus Garden"
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label class="form-label rk-label" for="description">
+            Description <span class="text-danger">*</span>
+          </label>
+          <textarea id="description" name="description" class="form-control rk-input"
+                    rows="4"
+                    placeholder="Describe the scent profile, notes, and character…"
+                    required>{{ perfume.description if perfume else '' }}</textarea>
+        </div>
+
+        <!-- Price & Quantity (two columns) -->
+        <div class="row g-3 mb-3">
+          <div class="col-sm-6">
+            <label class="form-label rk-label" for="price">
+              Price (USD) <span class="text-danger">*</span>
+            </label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="number" id="price" name="price" class="form-control rk-input"
+                     step="0.01" min="0" placeholder="0.00"
+                     value="{{ '%.2f'|format(perfume.price) if perfume else '' }}" required>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label rk-label" for="quantity">
+              Quantity / Stock <span class="text-danger">*</span>
+            </label>
+            <input type="number" id="quantity" name="quantity" class="form-control rk-input"
+                   min="0" placeholder="0"
+                   value="{{ perfume.quantity if perfume else '' }}" required>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="mb-3">
+          <label class="form-label rk-label" for="category">Category</label>
+          <select id="category" name="category" class="form-select rk-input">
+            {% for cat in ['Floral', 'Woody', 'Oriental', 'Fresh', 'Chypre', 'Citrus', 'Other'] %}
+            <option value="{{ cat }}"
+              {% if perfume and perfume.category == cat %}selected{% endif %}>
+              {{ cat }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="mb-3">
+          <label class="form-label rk-label" for="image">
+            Product Image
+            {% if action == 'Edit' %}
+              <span class="text-muted fw-normal">(leave blank to keep current)</span>
+            {% endif %}
+          </label>
+
+          <!-- Show current image when editing -->
+          {% if action == 'Edit' and perfume.image_filename != 'placeholder.png' %}
+          <div class="mb-2">
+            <img
+              src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+              alt="Current image"
+              class="admin-thumb-lg"
+            />
+            <small class="text-muted d-block mt-1">Current: {{ perfume.image_filename }}</small>
+          </div>
+          {% endif %}
+
+          <input type="file" id="image" name="image" class="form-control rk-input"
+                 accept=".jpg,.jpeg,.png,.webp,.gif"
+                 onchange="previewImage(this)">
+          <div class="form-text">Accepted: JPG, PNG, WebP, GIF – max 8 MB</div>
+
+          <!-- Upload preview -->
+          <img id="imgPreview" class="admin-thumb-lg mt-2 d-none" alt="Preview"/>
+        </div>
+
+        <!-- Featured toggle -->
+        <div class="mb-4 form-check">
+          <input type="checkbox" id="is_featured" name="is_featured"
+                 class="form-check-input"
+                 {{ 'checked' if perfume and perfume.is_featured else '' }}>
+          <label class="form-check-label" for="is_featured">
+            <i class="bi bi-star me-1 text-warning"></i>
+            Feature this product on the home page
+          </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex gap-3">
+          <button type="submit" class="btn rk-btn-primary">
+            <i class="bi bi-{{ 'plus-circle' if action == 'Add' else 'check-circle' }} me-2"></i>
+            {{ action }} Perfume
+          </button>
+          <a href="{{ url_for('admin.dashboard') }}" class="btn rk-btn-outline">
+            Cancel
+          </a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function previewImage(input) {
+    const preview = document.getElementById('imgPreview');
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        preview.src = e.target.result;
+        preview.classList.remove('d-none');
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+{% endblock %}

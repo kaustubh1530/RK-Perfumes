@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}{{ perfume.name }} – RK Perfume{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('products.home') }}">Home</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('products.shop') }}">Shop</a></li>
+      <li class="breadcrumb-item active">{{ perfume.name }}</li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN DETAIL SECTION ════════════════════════════════════════════ -->
+  <div class="row g-5 align-items-start">
+
+    <!-- Product Image -->
+    <div class="col-lg-5">
+      <div class="detail-img-wrap">
+        <img
+          src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+          alt="{{ perfume.name }}"
+          class="img-fluid detail-img"
+          onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
+        />
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="col-lg-7">
+
+      <span class="category-tag">{{ perfume.category }}</span>
+
+      <h1 class="detail-name mt-2">{{ perfume.name }}</h1>
+
+      <!-- Inspired By banner -->
+      <div class="inspired-banner mt-2 mb-3">
+        <i class="bi bi-stars me-2"></i>
+        <strong>Inspired by:</strong> {{ perfume.inspired_by }}
+      </div>
+
+      <!-- Price -->
+      <div class="detail-price mb-3">${{ "%.2f"|format(perfume.price) }}</div>
+
+      <!-- Stock status -->
+      <div class="mb-4">
+        {% if perfume.quantity == 0 %}
+          <span class="badge bg-danger py-2 px-3">
+            <i class="bi bi-x-circle me-1"></i>Out of Stock
+          </span>
+        {% elif perfume.quantity <= 5 %}
+          <span class="badge bg-warning text-dark py-2 px-3">
+            <i class="bi bi-exclamation-triangle me-1"></i>
+            Only {{ perfume.quantity }} left – Order soon!
+          </span>
+        {% else %}
+          <span class="badge bg-success py-2 px-3">
+            <i class="bi bi-check-circle me-1"></i>
+            In Stock ({{ perfume.quantity }} available)
+          </span>
+        {% endif %}
+      </div>
+
+      <!-- Description -->
+      <div class="detail-description mb-4">
+        <h6 class="detail-section-label">Description</h6>
+        <p class="text-muted">{{ perfume.description }}</p>
+      </div>
+
+      <!-- Disclaimer -->
+      <div class="alert alert-light border small text-muted mb-4">
+        <i class="bi bi-info-circle me-1"></i>
+        This fragrance is an <strong>inspired-by recreation</strong> of
+        <em>{{ perfume.inspired_by }}</em>. It is not affiliated with or manufactured
+        by the original brand. All trademarks belong to their respective owners.
+      </div>
+
+      <!-- CTA -->
+      <div class="d-flex gap-3 flex-wrap">
+        <a href="{{ url_for('products.contact') }}" class="btn rk-btn-primary">
+          <i class="bi bi-envelope me-2"></i>Enquire to Order
+        </a>
+        <a href="{{ url_for('products.shop') }}" class="btn rk-btn-outline">
+          <i class="bi bi-arrow-left me-2"></i>Back to Shop
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ RELATED PRODUCTS ════════════════════════════════════════════════ -->
+  {% if related %}
+  <section class="mt-6 pt-5 border-top">
+    <div class="section-header text-center mb-4">
+      <p class="section-label">You may also like</p>
+      <h3 class="section-title">Related Fragrances</h3>
+      <div class="section-divider mx-auto"></div>
+    </div>
+    <div class="row g-4">
+      {% for p in related %}
+      <div class="col-sm-6 col-md-4">
+        <div class="rk-card h-100">
+          <div class="rk-card-img-wrap">
+            <img
+              src="{{ url_for('static', filename='images/' + p.image_filename) }}"
+              alt="{{ p.name }}"
+              class="rk-card-img"
+              onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
+            />
+          </div>
+          <div class="rk-card-body">
+            <p class="inspired-tag"><i class="bi bi-stars me-1"></i>{{ p.inspired_by }}</p>
+            <h6 class="rk-card-title">{{ p.name }}</h6>
+            <div class="d-flex align-items-center justify-content-between mt-3">
+              <span class="rk-price">${{ "%.2f"|format(p.price) }}</span>
+              <a href="{{ url_for('products.product_detail', product_id=p.id) }}"
+                 class="btn rk-btn-primary btn-sm">View</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+</div>
+{% endblock %}

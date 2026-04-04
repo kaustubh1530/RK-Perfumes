@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Contact – RK Perfume{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <div class="section-header text-center mb-5">
+    <p class="section-label">We'd Love to Hear from You</p>
+    <h1 class="section-title">Get in Touch</h1>
+    <div class="section-divider mx-auto"></div>
+  </div>
+
+  <div class="row g-5 justify-content-center">
+
+    <!-- ═══ CONTACT DETAILS ═══════════════════════════════════════════════ -->
+    <div class="col-lg-4">
+      <div class="contact-info-card">
+
+        <div class="contact-info-item">
+          <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+          <div>
+            <h6>Email</h6>
+            <p class="text-muted mb-0">rakshpatil1795@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-icon"><i class="bi bi-whatsapp"></i></div>
+          <div>
+            <h6>WhatsApp</h6>
+            <p class="text-muted mb-0">+91 90111 79792</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-icon"><i class="bi bi-instagram"></i></div>
+          <div>
+            <h6>Instagram</h6>
+            <p class="text-muted mb-0">@rk_perfume__</p>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-icon"><i class="bi bi-clock-fill"></i></div>
+          <div>
+            <h6>Response Time</h6>
+            <p class="text-muted mb-0">Within 24 hours</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══ CONTACT FORM ══════════════════════════════════════════════════ -->
+    <div class="col-lg-6">
+      <div class="contact-form-card">
+        <form method="POST" action="{{ url_for('products.contact') }}" novalidate>
+
+          <div class="mb-3">
+            <label class="form-label rk-label" for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control rk-input"
+                   placeholder="Your name" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label rk-label" for="email">Email Address</label>
+            <input type="email" id="email" name="email" class="form-control rk-input"
+                   placeholder="your@email.com" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label rk-label" for="subject">Subject</label>
+            <select id="subject" name="subject" class="form-select rk-input">
+              <option value="General Enquiry">General Enquiry</option>
+              <option value="Order Request">Order Request</option>
+              <option value="Custom Fragrance">Custom Fragrance</option>
+              <option value="Wholesale">Wholesale</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label rk-label" for="message">Message</label>
+            <textarea id="message" name="message" class="form-control rk-input"
+                      rows="5" placeholder="Tell us what you're looking for…" required></textarea>
+          </div>
+
+          <button type="submit" class="btn rk-btn-primary w-100">
+            <i class="bi bi-send me-2"></i>Send Message
+          </button>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

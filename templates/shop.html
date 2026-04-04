@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block title %}Shop – RK Perfume{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Page Header -->
+  <div class="section-header text-center mb-5">
+    <p class="section-label">Inspired-By Collection</p>
+    <h1 class="section-title">All Perfumes</h1>
+    <div class="section-divider mx-auto"></div>
+  </div>
+
+  <!-- ═══ FILTER BAR ════════════════════════════════════════════════════════ -->
+  <form method="GET" action="{{ url_for('products.shop') }}" class="rk-filter-bar mb-5">
+    <div class="row g-2 align-items-center">
+
+      <!-- Search input -->
+      <div class="col-12 col-md-5">
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input type="text" name="q" class="form-control"
+                 placeholder="Search by name or inspiration…"
+                 value="{{ current_q }}">
+        </div>
+      </div>
+
+      <!-- Category filter -->
+      <div class="col-12 col-md-4">
+        <select name="category" class="form-select">
+          <option value="">All Categories</option>
+          {% for cat in categories %}
+          <option value="{{ cat }}" {% if cat == current_cat %}selected{% endif %}>
+            {{ cat }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="col-12 col-md-3 d-flex gap-2">
+        <button type="submit" class="btn rk-btn-primary flex-fill">Filter</button>
+        {% if current_q or current_cat %}
+        <a href="{{ url_for('products.shop') }}" class="btn rk-btn-outline">Clear</a>
+        {% endif %}
+      </div>
+
+    </div>
+  </form>
+
+  <!-- Result count -->
+  <p class="text-muted mb-4 small">
+    Showing {{ perfumes|length }} fragrance{{ '' if perfumes|length == 1 else 's' }}
+    {% if current_q %} for "<strong>{{ current_q }}</strong>"{% endif %}
+    {% if current_cat %} in <strong>{{ current_cat }}</strong>{% endif %}
+  </p>
+
+  <!-- ═══ PRODUCT GRID ════════════════════════════════════════════════════ -->
+  {% if perfumes %}
+  <div class="row g-4">
+    {% for perfume in perfumes %}
+    <div class="col-sm-6 col-lg-4">
+      <div class="rk-card h-100">
+
+        <div class="rk-card-img-wrap">
+          <img
+            src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+            alt="{{ perfume.name }}"
+            class="rk-card-img"
+            onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
+          />
+          {% if perfume.stock_status == 'out' %}
+            <span class="stock-badge out">Out of Stock</span>
+          {% elif perfume.stock_status == 'low' %}
+            <span class="stock-badge low">Low Stock</span>
+          {% endif %}
+          {% if perfume.is_featured %}
+            <span class="featured-ribbon">Featured</span>
+          {% endif %}
+        </div>
+
+        <div class="rk-card-body">
+          <span class="category-tag">{{ perfume.category }}</span>
+          <p class="inspired-tag mt-1">
+            <i class="bi bi-stars me-1"></i>Inspired by {{ perfume.inspired_by }}
+          </p>
+          <h5 class="rk-card-title">{{ perfume.name }}</h5>
+          <p class="rk-card-text">{{ perfume.description | truncate(85) }}</p>
+
+          <!-- Stock info -->
+          <div class="stock-info small mb-3">
+            <i class="bi bi-box-seam me-1"></i>
+            {% if perfume.quantity == 0 %}
+              <span class="text-danger">Out of stock</span>
+            {% elif perfume.quantity <= 5 %}
+              <span class="text-warning">Only {{ perfume.quantity }} left</span>
+            {% else %}
+              <span class="text-success">{{ perfume.quantity }} in stock</span>
+            {% endif %}
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between mt-auto pt-2">
+            <span class="rk-price">${{ "%.2f"|format(perfume.price) }}</span>
+            <a href="{{ url_for('products.product_detail', product_id=perfume.id) }}"
+               class="btn rk-btn-primary btn-sm">
+              View Details
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <!-- Empty state -->
+  <div class="text-center py-5">
+    <i class="bi bi-wind" style="font-size:3rem;color:var(--rk-gold);"></i>
+    <h4 class="mt-3">No perfumes found</h4>
+    <p class="text-muted">Try a different search or clear the filters.</p>
+    <a href="{{ url_for('products.shop') }}" class="btn rk-btn-outline">Clear Filters</a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

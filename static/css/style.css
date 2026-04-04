@@ -1,0 +1,587 @@
+/* ============================================================
+   RK Perfume – Main Stylesheet
+   ============================================================ */
+
+/* ── Variables ───────────────────────────────────────────── */
+:root {
+  --rk-gold:        #B8976C;
+  --rk-gold-light:  #D4B896;
+  --rk-cream:       #FAF7F2;
+  --rk-charcoal:    #1A1614;
+  --rk-muted:       #6B5E54;
+  --rk-border:      #E8DDD3;
+  --ff-display:     'Cormorant Garamond', Georgia, serif;
+  --ff-body:        'Jost', sans-serif;
+  --transition:     0.25s ease;
+}
+
+/* ── Base ─────────────────────────────────────────────────── */
+body {
+  font-family: var(--ff-body);
+  background-color: var(--rk-cream);
+  color: var(--rk-charcoal);
+  font-weight: 300;
+}
+
+a { color: var(--rk-gold); text-decoration: none; }
+a:hover { color: var(--rk-charcoal); }
+
+.letter-wide { letter-spacing: 0.15em; text-transform: uppercase; }
+.fw-500 { font-weight: 500; }
+
+/* ── Navbar ───────────────────────────────────────────────── */
+.rk-navbar {
+  background: #fff !important;
+  border-bottom: 1px solid var(--rk-border);
+  padding: 0.85rem 0;
+  box-shadow: none;
+}
+
+.rk-brand {
+  font-family: var(--ff-display);
+  font-size: 1.45rem;
+  font-weight: 300;
+  color: var(--rk-charcoal) !important;
+  letter-spacing: 0.08em;
+}
+.brand-rk {
+  color: var(--rk-gold);
+  font-weight: 600;
+}
+
+.rk-navbar .nav-link {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--rk-muted) !important;
+  padding: 0.4rem 0.6rem;
+  transition: color var(--transition);
+}
+.rk-navbar .nav-link:hover,
+.rk-navbar .nav-link.active {
+  color: var(--rk-gold) !important;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.rk-btn-primary {
+  background: var(--rk-charcoal);
+  color: #fff !important;
+  border: 1px solid var(--rk-charcoal);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--ff-body);
+  font-weight: 400;
+  padding: 0.55rem 1.5rem;
+  border-radius: 2px;
+  transition: background var(--transition), color var(--transition);
+}
+.rk-btn-primary:hover {
+  background: var(--rk-gold);
+  border-color: var(--rk-gold);
+  color: #fff !important;
+}
+
+.rk-btn-outline {
+  background: transparent;
+  color: var(--rk-charcoal) !important;
+  border: 1px solid var(--rk-charcoal);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-family: var(--ff-body);
+  font-weight: 400;
+  padding: 0.55rem 1.5rem;
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+.rk-btn-outline:hover {
+  background: var(--rk-charcoal);
+  color: #fff !important;
+}
+
+/* ── Hero ─────────────────────────────────────────────────── */
+.rk-hero {
+  min-height: 82vh;
+  background: linear-gradient(155deg, var(--rk-cream) 0%, #EDE0D4 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0;
+}
+
+/* Decorative circle */
+.rk-hero::before {
+  content: '';
+  position: absolute;
+  right: -100px;
+  top: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: rgba(184,151,108,0.1);
+}
+.rk-hero::after {
+  content: '';
+  position: absolute;
+  left: -80px;
+  bottom: -80px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: rgba(184,151,108,0.07);
+}
+
+.hero-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rk-gold);
+  margin-bottom: 1.2rem;
+}
+.hero-title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--rk-charcoal);
+  margin-bottom: 1.2rem;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--rk-gold);
+}
+.hero-sub {
+  font-size: 1rem;
+  color: var(--rk-muted);
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.8;
+}
+
+/* ── Section headers ──────────────────────────────────────── */
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rk-gold);
+  margin-bottom: 0.5rem;
+}
+.section-title {
+  font-family: var(--ff-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 300;
+  color: var(--rk-charcoal);
+  margin-bottom: 0.5rem;
+}
+.section-divider {
+  width: 40px;
+  height: 2px;
+  background: var(--rk-gold);
+  margin-top: 0.75rem;
+}
+
+/* ── Product Card ─────────────────────────────────────────── */
+.rk-card {
+  background: #fff;
+  border: 1px solid var(--rk-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.rk-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+.rk-card-img-wrap {
+  position: relative;
+  background: linear-gradient(135deg, var(--rk-cream), #EDE0D4);
+  overflow: hidden;
+}
+.rk-card-img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.rk-card:hover .rk-card-img {
+  transform: scale(1.04);
+}
+
+.rk-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.rk-card-title {
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+  color: var(--rk-charcoal);
+}
+.rk-card-text {
+  font-size: 0.83rem;
+  color: var(--rk-muted);
+  line-height: 1.7;
+  flex: 1;
+}
+.rk-price {
+  font-family: var(--ff-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--rk-gold);
+}
+
+/* ── Badges on cards ──────────────────────────────────────── */
+.stock-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+.stock-badge.out  { background: #E24B4A; color: #fff; }
+.stock-badge.low  { background: #EF9F27; color: #fff; }
+
+.featured-ribbon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--rk-gold);
+  color: #fff;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.inspired-tag {
+  font-size: 0.72rem;
+  color: var(--rk-gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+
+.category-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border: 1px solid var(--rk-border);
+  color: var(--rk-muted);
+  border-radius: 20px;
+}
+
+/* ── Filter Bar ───────────────────────────────────────────── */
+.rk-filter-bar {
+  background: #fff;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--rk-border);
+  border-radius: 4px;
+}
+
+/* ── Form inputs ──────────────────────────────────────────── */
+.rk-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+  font-weight: 400;
+  margin-bottom: 0.35rem;
+}
+.rk-input {
+  border: 1px solid var(--rk-border);
+  border-radius: 2px;
+  font-family: var(--ff-body);
+  font-size: 0.88rem;
+  color: var(--rk-charcoal);
+  background: #fff;
+  padding: 0.55rem 0.85rem;
+  transition: border-color var(--transition);
+}
+.rk-input:focus {
+  border-color: var(--rk-gold);
+  box-shadow: 0 0 0 3px rgba(184,151,108,0.12);
+  outline: none;
+}
+
+/* ── Trust badges ─────────────────────────────────────────── */
+.trust-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--rk-muted);
+  letter-spacing: 0.08em;
+}
+.trust-badge i {
+  font-size: 1.1rem;
+  color: var(--rk-gold);
+}
+
+/* ── About section ────────────────────────────────────────── */
+.rk-about-banner {
+  background: #fff;
+  border-top: 1px solid var(--rk-border);
+  border-bottom: 1px solid var(--rk-border);
+}
+.about-icon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.about-icon-card {
+  background: var(--rk-cream);
+  border: 1px solid var(--rk-border);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  border-radius: 4px;
+}
+.about-icon-card i {
+  font-size: 1.8rem;
+  color: var(--rk-gold);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.about-icon-card p {
+  font-size: 0.78rem;
+  color: var(--rk-muted);
+  margin: 0;
+}
+
+/* ── Category pills ───────────────────────────────────────── */
+.cat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  border: 1px solid var(--rk-border);
+  padding: 1.25rem 0.75rem;
+  border-radius: 4px;
+  color: var(--rk-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+.cat-pill:hover {
+  background: var(--rk-charcoal);
+  color: #fff;
+  border-color: var(--rk-charcoal);
+}
+.cat-icon { font-size: 1.6rem; line-height: 1; }
+
+/* Bootstrap col for 5-column grid */
+@media (min-width: 992px) {
+  .col-lg-2-4 {
+    width: 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+/* ── Product Detail Page ──────────────────────────────────── */
+.detail-img-wrap {
+  border: 1px solid var(--rk-border);
+  background: linear-gradient(135deg, var(--rk-cream), #EDE0D4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.detail-img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  display: block;
+}
+.detail-name {
+  font-family: var(--ff-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 0.3rem;
+}
+.detail-price {
+  font-family: var(--ff-display);
+  font-size: 2rem;
+  color: var(--rk-gold);
+}
+.detail-section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--rk-muted);
+  margin-bottom: 0.5rem;
+}
+.inspired-banner {
+  background: linear-gradient(90deg, var(--rk-cream), transparent);
+  border-left: 3px solid var(--rk-gold);
+  padding: 0.6rem 1rem;
+  font-size: 0.88rem;
+  color: var(--rk-muted);
+  border-radius: 0 4px 4px 0;
+}
+
+.mt-6 { margin-top: 4rem; }
+
+/* ── Contact Page ─────────────────────────────────────────── */
+.contact-info-card {
+  background: var(--rk-charcoal);
+  border-radius: 4px;
+  padding: 2rem 1.75rem;
+  height: 100%;
+}
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+.contact-info-item:last-child { margin-bottom: 0; }
+.contact-info-item h6,
+.contact-info-item p {
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+.contact-info-item h6 {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rk-gold-light);
+  margin-bottom: 0.25rem;
+}
+.contact-info-item p {
+  font-size: 0.85rem;
+}
+.contact-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--rk-gold-light);
+  font-size: 1rem;
+}
+.contact-form-card {
+  background: #fff;
+  border: 1px solid var(--rk-border);
+  border-radius: 4px;
+  padding: 2.25rem 2rem;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+.rk-footer {
+  background: var(--rk-charcoal);
+  color: rgba(255,255,255,0.7);
+}
+.rk-footer .rk-brand {
+  color: #fff !important;
+}
+.footer-heading {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rk-gold-light);
+  margin-bottom: 1rem;
+}
+.footer-links li a {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.83rem;
+  transition: color var(--transition);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.footer-links li a:hover {
+  color: var(--rk-gold-light);
+}
+.social-icons a {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.2rem;
+  transition: color var(--transition);
+}
+.social-icons a:hover { color: var(--rk-gold-light); }
+.footer-divider { border-color: rgba(255,255,255,0.1); }
+
+/* ── Admin Login page ─────────────────────────────────────── */
+.rk-login-body {
+  background: linear-gradient(145deg, #FAF7F2, #EDE0D4);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.login-wrapper { width: 100%; max-width: 400px; }
+.login-card {
+  background: #fff;
+  border: 1px solid var(--rk-border);
+  border-radius: 4px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+}
+
+/* ── Breadcrumb ───────────────────────────────────────────── */
+.breadcrumb {
+  font-size: 0.8rem;
+  color: var(--rk-muted);
+}
+.breadcrumb-item.active { color: var(--rk-charcoal); }
+.breadcrumb-item + .breadcrumb-item::before { color: var(--rk-gold); }
+.breadcrumb a { color: var(--rk-muted); }
+
+/* ── Responsive tweaks ────────────────────────────────────── */
+@media (max-width: 767px) {
+  .rk-hero { min-height: auto; padding: 3.5rem 0 4rem; }
+  .detail-img { height: 280px; }
+  .about-icon-grid { grid-template-columns: 1fr 1fr; }
+}
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.rk-footer { background: #1A1614; color: rgba(255,255,255,0.7); }
+.footer-main { border-bottom: 1px solid rgba(255,255,255,0.08); }
+.rk-footer .rk-brand { color: #fff !important; font-size: 1.4rem; }
+.footer-about { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.8; }
+.footer-heading { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: #B8976C; margin-bottom: 1rem; font-weight: 500; }
+.footer-links li { margin-bottom: 0.45rem; }
+.footer-links li a { color: rgba(255,255,255,0.55); font-size: 0.82rem; transition: color 0.2s; text-decoration: none; }
+.footer-links li a:hover { color: #D4B896; }
+.footer-contact { margin: 0; }
+.footer-contact li { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; font-size: 0.82rem; color: rgba(255,255,255,0.6); }
+.footer-contact li i { color: #B8976C; font-size: 0.95rem; flex-shrink: 0; }
+.footer-contact li a { color: rgba(255,255,255,0.6); text-decoration: none; transition: color 0.2s; }
+.footer-contact li a:hover { color: #D4B896; }
+.social-icons a { color: rgba(255,255,255,0.5); font-size: 1.2rem; transition: color 0.2s, transform 0.2s; display: inline-block; }
+.social-icons a:hover { color: #D4B896; transform: translateY(-2px); }
+.whatsapp-cta { background: #25D366; color: #fff !important; text-decoration: none; padding: 0.6rem 1.25rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500; transition: background 0.2s, transform 0.2s; }
+.whatsapp-cta:hover { background: #1ebe5d; transform: translateY(-1px); color: #fff !important; }
+.footer-bottom { background: #111; }
+.footer-bottom p { color: rgba(255,255,255,0.35); }
+.footer-disclaimer { font-style: italic; }
+
+/* ============================================================
+   FLOATING WHATSAPP BUTTON
+   ============================================================ */
+.whatsapp-float { position: fixed; bottom: 28px; right: 28px; z-index: 9999; background: #25D366; color: #fff !important; text-decoration: none; border-radius: 50px; padding: 0.7rem 1.25rem 0.7rem 1rem; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 20px rgba(37,211,102,0.4); font-size: 0.82rem; font-weight: 500; transition: transform 0.2s, box-shadow 0.2s; animation: wa-bounce 2.5s ease infinite; }
+.whatsapp-float:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 28px rgba(37,211,102,0.5); color: #fff !important; animation: none; }
+.whatsapp-float i { font-size: 1.3rem; line-height: 1; }
+.whatsapp-float-label { white-space: nowrap; }
+@keyframes wa-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@media (max-width: 400px) { .whatsapp-float { padding: 0.85rem; border-radius: 50%; } .whatsapp-float-label { display: none; } }

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+venv/
+.env
+*.db
+instance/
+.DS_Store
+static/images/*.jpg
+static/images/*.jpeg
+static/images/*.png
+static/images/*.webp
