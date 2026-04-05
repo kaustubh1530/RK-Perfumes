@@ -19,7 +19,11 @@ def create_app():
 
     # ── Config ────────────────────────────────────────────────
     app.config['SECRET_KEY']                     = os.environ.get('SECRET_KEY', secrets.token_hex(32))
-    app.config['SQLALCHEMY_DATABASE_URI']        = 'sqlite:///rk_perfume.db'
+    import os
+    db_url = os.environ.get('DATABASE_URL', 'sqlite:///rk_perfume.db')
+    if db_url.startswith('postgres://'):
+        db_url = db_url.replace('postgres://', 'postgresql://', 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER']                  = os.path.join('static', 'images')
     app.config['MAX_CONTENT_LENGTH']             = 8 * 1024 * 1024   # 8 MB
@@ -168,16 +172,3 @@ if __name__ == '__main__':
         db.create_all()
         seed_data()
     app.run(debug=True, port=5000)
-@app.route('/setup-admin')
-def setup_admin():
-    from models import Admin
-    from werkzeug.security import generate_password_hash
-    from extensions import db
-    with app.app_context():
-        admin = Admin.query.first()
-        if admin:
-            admin.email = 'admin@rkperfume.com'
-            admin.password_hash = generate_password_hash('Raksha@1530')
-            db.session.commit()
-            return 'Admin password updated! Visit /admin/login now. DELETE this route after!'
-        return 'No admin found'
