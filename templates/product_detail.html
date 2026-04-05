@@ -42,7 +42,7 @@
       </div>
 
       <!-- Price -->
-      <div class="detail-price mb-3">${{ "%.2f"|format(perfume.price) }}</div>
+      <div class="detail-price mb-3">&#8377;{{ "%.0f"|format(perfume.price) }}</div>
 
       <!-- Stock status -->
       <div class="mb-4">
@@ -114,7 +114,7 @@
             <p class="inspired-tag"><i class="bi bi-stars me-1"></i>{{ p.inspired_by }}</p>
             <h6 class="rk-card-title">{{ p.name }}</h6>
             <div class="d-flex align-items-center justify-content-between mt-3">
-              <span class="rk-price">${{ "%.2f"|format(p.price) }}</span>
+              <span class="rk-price">&#8377;{{ "%.0f"|format(p.price) }}</span>
               <a href="{{ url_for('products.product_detail', product_id=p.id) }}"
                  class="btn rk-btn-primary btn-sm">View</a>
             </div>

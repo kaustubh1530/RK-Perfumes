@@ -92,7 +92,7 @@
             <h5 class="rk-card-title">{{ perfume.name }}</h5>
             <p class="rk-card-text">{{ perfume.description | truncate(90) }}</p>
             <div class="d-flex align-items-center justify-content-between mt-auto pt-3">
-              <span class="rk-price">${{ "%.2f"|format(perfume.price) }}</span>
+              <span class="rk-price">&#8377;{{ "%.0f"|format(perfume.price) }}</span>
               <a href="{{ url_for('products.product_detail', product_id=perfume.id) }}"
                  class="btn rk-btn-primary btn-sm">
                 View Details
