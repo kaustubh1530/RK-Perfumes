@@ -21,7 +21,7 @@ def create_app():
     db_url = os.environ.get('DATABASE_URL', 'sqlite:///rk_perfume.db')
     if db_url.startswith('postgres://'):
         db_url = db_url.replace('postgres://', 'postgresql://', 1)
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///perfume_shop.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER']                  = os.path.join('static', 'images')
     app.config['MAX_CONTENT_LENGTH']             = 8 * 1024 * 1024   # 8 MB
