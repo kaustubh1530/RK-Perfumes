@@ -168,3 +168,16 @@ if __name__ == '__main__':
         db.create_all()
         seed_data()
     app.run(debug=True, port=5000)
+@app.route('/setup-admin')
+def setup_admin():
+    from models import Admin
+    from werkzeug.security import generate_password_hash
+    from extensions import db
+    with app.app_context():
+        admin = Admin.query.first()
+        if admin:
+            admin.email = 'admin@rkperfume.com'
+            admin.password_hash = generate_password_hash('Raksha@1530')
+            db.session.commit()
+            return 'Admin password updated! Visit /admin/login now. DELETE this route after!'
+        return 'No admin found'
