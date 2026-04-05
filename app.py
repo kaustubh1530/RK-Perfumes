@@ -1,4 +1,5 @@
 import os
+import secrets
 from dotenv import load_dotenv
 load_dotenv()
 """
@@ -8,8 +9,6 @@ Uses the Application Factory pattern to avoid circular imports.
 All extensions live in extensions.py and are bound to the app here.
 """
 
-import os
-import secrets
 from flask import Flask
 from extensions import db, login_manager          # ← from extensions, not circular
 
@@ -19,7 +18,6 @@ def create_app():
 
     # ── Config ────────────────────────────────────────────────
     app.config['SECRET_KEY']                     = os.environ.get('SECRET_KEY', secrets.token_hex(32))
-    import os
     db_url = os.environ.get('DATABASE_URL', 'sqlite:///rk_perfume.db')
     if db_url.startswith('postgres://'):
         db_url = db_url.replace('postgres://', 'postgresql://', 1)
