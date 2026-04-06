@@ -107,7 +107,7 @@
           {% if action == 'Edit' and perfume.image_filename != 'placeholder.png' %}
           <div class="mb-2">
             <img
-              src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+              src="{{ perfume.image_filename if perfume.image_filename.startswith('http') else url_for('static', filename='images/' + perfume.image_filename) }}"
               alt="Current image"
               class="admin-thumb-lg"
             />

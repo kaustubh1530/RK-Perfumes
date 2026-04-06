@@ -20,7 +20,7 @@
     <div class="col-lg-5">
       <div class="detail-img-wrap">
         <img
-          src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+          src="{{ perfume.image_filename if perfume.image_filename.startswith('http') else url_for('static', filename='images/' + perfume.image_filename) }}"
           alt="{{ perfume.name }}"
           class="img-fluid detail-img"
           onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
@@ -104,7 +104,7 @@
         <div class="rk-card h-100">
           <div class="rk-card-img-wrap">
             <img
-              src="{{ url_for('static', filename='images/' + p.image_filename) }}"
+              src="{{ p.image_filename if p.image_filename.startswith('http') else url_for('static', filename='images/' + p.image_filename) }}"
               alt="{{ p.name }}"
               class="rk-card-img"
               onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"

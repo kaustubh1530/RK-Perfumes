@@ -79,7 +79,7 @@
           <!-- Thumbnail -->
           <td>
             <img
-              src="{{ url_for('static', filename='images/' + p.image_filename) }}"
+              src="{{ p.image_filename if p.image_filename.startswith('http') else url_for('static', filename='images/' + p.image_filename) }}"
               alt="{{ p.name }}"
               class="admin-thumb"
               onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"

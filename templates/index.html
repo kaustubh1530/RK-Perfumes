@@ -74,7 +74,7 @@
           <!-- Product Image -->
           <div class="rk-card-img-wrap">
             <img
-              src="{{ url_for('static', filename='images/' + perfume.image_filename) }}"
+              src="{{ perfume.image_filename if perfume.image_filename.startswith('http') else url_for('static', filename='images/' + perfume.image_filename) }}"
               alt="{{ perfume.name }}"
               class="rk-card-img"
               onerror="this.src='{{ url_for('static', filename='images/placeholder.png') }}'"
